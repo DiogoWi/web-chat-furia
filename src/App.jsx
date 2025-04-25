@@ -1,6 +1,6 @@
 import './App.css'
-import Chat from './component/chat'
-import Lista from './component/lista'
+import Chat from './components/chat'
+import Lista from './components/lista'
 
 function App() {
   return (
