@@ -62,7 +62,7 @@ const Login = () => {
         .then(data => {
 
             for (const key in data) {
-                if (data[key].email == loginEmail && data[key].senha == Number(loginSenha)) {
+                if (data[key].email == loginEmail && data[key].senha == loginSenha) {
                     usuario = Number(key) + 1;
                     break
                 }
@@ -135,7 +135,7 @@ const Login = () => {
                         type="password" 
                         placeholder="Senha" 
                         name="password" 
-                        onChange={(event) => setCadastroSenha(Number(event.target.value))}
+                        onChange={(event) => setCadastroSenha(event.target.value)}
                         value={cadastroSenha}
                         required 
                     />
