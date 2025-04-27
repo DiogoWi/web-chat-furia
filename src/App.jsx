@@ -2,13 +2,14 @@ import './App.css'
 import Chat from './components/chat'
 import Lista from './components/lista'
 import Login from './components/login';
+import { useLoginCadastro } from './context/LoginCadastroContext';
 
 function App() {
-  const usuario = false;
+  const { usuarioAtivo } = useLoginCadastro();
 
   return (
     <div className="container">
-      {usuario ? (
+      {usuarioAtivo ? (
         <>
           <Lista />
           <Chat />

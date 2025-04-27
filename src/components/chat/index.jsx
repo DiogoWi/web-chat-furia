@@ -1,8 +1,11 @@
 import EmojiPicker from 'emoji-picker-react';
 import './chat.css';
 import { useState, useRef, useEffect } from 'react';
+import { useLoginCadastro } from '../../context/LoginCadastroContext';
 
 const Chat = () => {
+    const { usuarioAtivo } = useLoginCadastro();
+
     const [open, setOpen] = useState(false);
     const [text, setText] = useState("");
 
@@ -19,9 +22,9 @@ const Chat = () => {
     return (
         <div className="chat">
             <div className="top">
-                <img src="/avatar.png" alt="foto do usuário" />
+                <img src={usuarioAtivo.avatar.file} alt="foto do usuário" />
                 <div className="texts">
-                    <span>Nome do usuário</span>
+                    <span>{usuarioAtivo.username}</span>
                     <p>Lorem ipsum dolor, sit amet.</p>
                 </div>
             </div>
