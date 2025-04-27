@@ -20,7 +20,7 @@ class App {
             console.log('conectou')
 
             socket.on('mensagem', mensagem => {
-                this.socketIo.emit('mensagem', mensagem)
+                socket.broadcast.emit('mensagem', mensagem)
             })
         })
     }
