@@ -2,27 +2,84 @@ import EmojiPicker from 'emoji-picker-react';
 import './chat.css';
 import { useState, useRef, useEffect } from 'react';
 import { useLoginCadastro } from '../../context/LoginCadastroContext';
+import { socket } from '../../socket';
 
 const Chat = () => {
+    const [socketInstance] = useState(socket());
+
+    useEffect(() => {
+        socketInstance.on('mensagem', mensagem => {
+            console.log('Mensagem recebida: ', mensagem)
+
+            setMensagems(prev => [...prev, mensagem]);
+        });
+
+        return () => {
+            socketInstance.off('mensagem')
+        }
+    }, [socketInstance])
+
     const { usuarioAtivo } = useLoginCadastro();
 
     const [open, setOpen] = useState(false);
     const [text, setText] = useState("");
 
-    const endRef = useRef(null);
-
-    useEffect(() => {
-        endRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, []);
-
     const handleEmoji = (emojiClick) => {
         setText(prev => prev + emojiClick.emoji)
     };
 
+    const [mensagems, setMensagems] = useState([
+        {
+            avatar: "src/assets/imagem1.png",
+            foto: "src/assets/imagem1.png",
+            texto: "Mensagem enviada",
+            horario: "02/03/2000"
+        },
+        {
+            foto: "src/assets/imagem2.jpg",
+            horario: "02/03/2000",
+            own: true
+        },
+        {
+            avatar: "src/assets/imagem1.png",
+            texto: "Cara não acredito, a furia tá jogando muito",
+            horario: "02/03/2000",
+        },
+        {
+            texto: "Cê é loco, não compensa bater de frente",
+            horario: "02/03/2000",
+            own: true
+        }
+    ]); 
+
+    const endRef = useRef(null);
+
+    useEffect(() => {
+        endRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [mensagems]);
+
+    const handleMensagem = texto => {
+        const newMensagemClient = {
+            texto,
+            horario: "02/03/2000",
+            own: true
+        }
+
+        const newMensagemServer = {
+            texto,
+            horario: "02/03/2000",
+            avatar: usuarioAtivo.avatar.file
+        }
+
+        setMensagems(prev => [...prev, newMensagemClient])
+
+        socketInstance.emit('mensagem', newMensagemServer)
+    }
+
     return (
         <div className="chat">
             <div className="top">
-                <img src={usuarioAtivo.avatar.file} alt="foto do usuário" />
+                <img src={usuarioAtivo.avatar.file || "/avatar.png"} alt="foto do usuário" />
                 <div className="texts">
                     <span>{usuarioAtivo.username}</span>
                     <p>Lorem ipsum dolor, sit amet.</p>
@@ -30,36 +87,18 @@ const Chat = () => {
             </div>
 
             <div className="center">
-                <div className="message">
-                    <img src="src/assets/imagem1.png" alt="foto enviada" />
-                    <div className="texts">
-                        <img src="src/assets/imagem1.png" alt="foto enviada" />
-                        <p>Mensagem enviada</p>
-                        <span>02/03/2000</span>
-                    </div>
-                </div>
-                
-                <div className="message own">
-                    <div className="texts">
-                        <img src="src/assets/imagem2.jpg" alt="foto enviada" />
-                        <span>02/03/2000</span>
-                    </div>
-                </div>
-
-                <div className="message">
-                    <img src="src/assets/imagem1.png" alt="foto enviada" />
-                    <div className="texts">
-                        <p>Cara não acredito a furia tá jogando muito</p>
-                        <span>02/03/2000</span>
-                    </div>
-                </div>
-
-                <div className="message own">
-                    <div className="texts">
-                        <p>Cê é loco, não compensa bater de frente</p>
-                        <span>02/03/2000</span>
-                    </div>
-                </div>
+                {mensagems.map((mensagem, index) => {
+                    return (
+                        <div className={mensagem.own ? "message own" : "message"} key={index}>
+                            {mensagem.avatar && <img src={mensagem.avatar} alt="foto de perfil" />}
+                            <div className='texts'>
+                                {mensagem.foto && <img src={mensagem.foto} alt="foto enviada" />}
+                                {mensagem.texto && <p>{mensagem.texto}</p>}
+                                <span>{mensagem.horario}</span>
+                            </div>
+                        </div>
+                    )
+                })}
 
                 <div ref={endRef}></div>
             </div>
@@ -86,7 +125,10 @@ const Chat = () => {
                     </div>
                 </div>
 
-                <button className="sendButton">Send</button>
+                <button className="sendButton" onClick={() => {
+                    handleMensagem(text);
+                    setText("");
+                }}>Enviar</button>
             </div>
         </div>
     );
