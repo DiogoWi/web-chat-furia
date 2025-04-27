@@ -50,7 +50,7 @@ export const useLoginCadastro = () => {
         event.preventDefault();
 
         const usuario = {
-            id: 1,
+            id: "1",
             username: cadastroUsername,
             email: cadastroEmail,
             senha: cadastroSenha,
