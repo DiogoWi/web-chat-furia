@@ -48,17 +48,17 @@ const Chat = () => {
     const horario = `${dia}/${mes} ${hora}:${minuto}`;
 
     const handleMensagem = texto => {
-        const newMensagemClient = {
-            texto,
-            horario,
-            own: true
-        }
+        // const newMensagemClient = {
+        //     texto,
+        //     horario,
+        //     own: true
+        // }
 
-        const newMensagemServer = {
-            texto,
-            horario,
-            avatar: usuarioAtivo.avatar.file
-        }
+        // const newMensagemServer = {
+        //     texto,
+        //     horario,
+        //     avatar: usuarioAtivo.avatar.file
+        // }
 
         const mensagemTeste = {
             id: uuid(),
@@ -76,9 +76,9 @@ const Chat = () => {
         .then(response => response.json())
         .then(data => {
             console.log("Mensagem cadastrada: ", data);
-            setMensagems(prev => [...prev, newMensagemClient])
+            setMensagems(prev => [...prev, mensagemTeste])
 
-            socketInstance.emit('mensagem', newMensagemServer)
+            socketInstance.emit('mensagem', mensagemTeste)
         })
         .catch(error => console.log("Erro ao adicionar mensagem: ", error))
     }
@@ -96,8 +96,8 @@ const Chat = () => {
             <div className="center">
                 {mensagems.map((mensagem, index) => {
                     return (
-                        <div className={mensagem.own ? "message own" : "message"} key={index}>
-                            {mensagem.avatar && <img src={mensagem.avatar} alt="foto de perfil" />}
+                        <div className={mensagem.usuario == usuarioAtivo.id ? "message own" : "message"} key={index}>
+                            {mensagem.usuario != usuarioAtivo.id ? <img src={mensagem.avatar.file} alt="foto de perfil" /> : ""}
                             <div className='texts'>
                                 {mensagem.foto && <img src={mensagem.foto} alt="foto enviada" />}
                                 {mensagem.texto && <p>{mensagem.texto}</p>}
