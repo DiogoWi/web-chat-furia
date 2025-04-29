@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import EmojiPicker from 'emoji-picker-react';
 import './chat.css';
+import { v4 as uuid } from 'uuid';
 import { useState, useRef, useEffect } from 'react';
 import { useLoginCadastro } from '../../context/LoginCadastroContext';
 import { socket } from '../../socket';
@@ -60,6 +61,7 @@ const Chat = () => {
         }
 
         const mensagemTeste = {
+            id: uuid(),
             usuario: usuarioAtivo.id,
             texto,
             horario,
