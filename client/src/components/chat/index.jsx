@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import EmojiPicker from 'emoji-picker-react';
 import './chat.css';
 import { useState, useRef, useEffect } from 'react';
 import { useLoginCadastro } from '../../context/LoginCadastroContext';
 import { socket } from '../../socket';
+import { useMensagem } from '../../context/MensagemContext';
 
 const Chat = () => {
     const [socketInstance] = useState(socket());
@@ -19,8 +21,6 @@ const Chat = () => {
         }
     }, [socketInstance])
 
-    const { usuarioAtivo } = useLoginCadastro();
-
     const [open, setOpen] = useState(false);
     const [text, setText] = useState("");
 
@@ -28,35 +28,15 @@ const Chat = () => {
         setText(prev => prev + emojiClick.emoji)
     };
 
-    const [mensagems, setMensagems] = useState([
-        {
-            avatar: "src/assets/imagem1.png",
-            foto: "src/assets/imagem1.png",
-            texto: "Mensagem enviada",
-            horario: "02/03/2000"
-        },
-        {
-            foto: "src/assets/imagem2.jpg",
-            horario: "02/03/2000",
-            own: true
-        },
-        {
-            avatar: "src/assets/imagem1.png",
-            texto: "Cara não acredito, a furia tá jogando muito",
-            horario: "02/03/2000",
-        },
-        {
-            texto: "Cê é loco, não compensa bater de frente",
-            horario: "02/03/2000",
-            own: true
-        }
-    ]);
+    const { chat, mensagems, setMensagems } = useMensagem();
 
     const endRef = useRef(null);
 
     useEffect(() => {
         endRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [mensagems]);
+
+    const { usuarioAtivo } = useLoginCadastro();
 
     const data = new Date();
     const dia = data.getDate().toString().padStart(2, "0");
@@ -86,7 +66,7 @@ const Chat = () => {
             avatar: usuarioAtivo.avatar
         }
 
-        fetch("http://localhost:3000/mensagens", {
+        fetch(`http://localhost:3000/${chat}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(mensagemTeste)

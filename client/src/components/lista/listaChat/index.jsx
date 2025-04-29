@@ -1,12 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './listaChat.css';
 import { socket } from '../../../socket';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useMensagem } from '../../../context/MensagemContext';
 
 const ListaChat = () => {
     const [socketInstance] = useState(socket());
+    const { chat, setChat, trocarMensagens } = useMensagem();
+
+    useEffect(() => {
+        trocarMensagens();
+    }, [chat]);
 
     const handleSala = sala => {
         socketInstance.emit('entrarNaSala', sala);
+
+        if (sala === "CS:GO") {
+            setChat('mensagens_cs_go');
+        } else if (sala === "Valorant") {
+            setChat('mensagens_valorant');
+        } else {
+            setChat('mensagens_lol');
+        }
     }
 
     return ( 
