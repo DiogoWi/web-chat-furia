@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState } from "react";
+import { v4 as uuid } from 'uuid';
 
 export const LoginCadastroContext = createContext();
 LoginCadastroContext.displayName = "Login"
@@ -50,7 +51,7 @@ export const useLoginCadastro = () => {
         event.preventDefault();
 
         const usuario = {
-            id: "1",
+            id: uuid(),
             username: cadastroUsername,
             email: cadastroEmail,
             senha: cadastroSenha,
@@ -84,7 +85,7 @@ export const useLoginCadastro = () => {
 
             for (const key in data) {
                 if (data[key].email == loginEmail && data[key].senha == loginSenha) {
-                    usuario = Number(key) + 1;
+                    usuario = data[key].id;
                     break
                 }
             }
