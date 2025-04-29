@@ -58,16 +58,24 @@ const Chat = () => {
         endRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [mensagems]);
 
+    const data = new Date();
+    const dia = data.getDate().toString().padStart(2, "0");
+    const mes = (data.getMonth() + 1).toString().padStart(2, "0");
+    const hora = data.getHours().toString().padStart(2, "0");
+    const minuto = data.getMinutes().toString().padStart(2, "0");
+
+    const horario = `${dia}/${mes} ${hora}:${minuto}`;
+
     const handleMensagem = texto => {
         const newMensagemClient = {
             texto,
-            horario: "02/03/2000",
+            horario,
             own: true
         }
 
         const newMensagemServer = {
             texto,
-            horario: "02/03/2000",
+            horario,
             avatar: usuarioAtivo.avatar.file
         }
 
