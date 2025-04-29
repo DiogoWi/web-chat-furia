@@ -17,11 +17,16 @@ class App {
         });
 
         this.socketIo.on('connection', socket => {
-            console.log('conectou')
+            console.log('conectou');
+
+            socket.on('entrarNaSala', sala => {
+                socket.join(sala);
+                console.log(`Usuário entrou na sala ${sala}`);
+            });
 
             socket.on('mensagem', mensagem => {
                 socket.broadcast.emit('mensagem', mensagem)
-            })
+            });
         })
     }
 }
