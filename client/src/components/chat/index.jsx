@@ -50,7 +50,7 @@ const Chat = () => {
             horario: "02/03/2000",
             own: true
         }
-    ]); 
+    ]);
 
     const endRef = useRef(null);
 
@@ -79,9 +79,26 @@ const Chat = () => {
             avatar: usuarioAtivo.avatar.file
         }
 
-        setMensagems(prev => [...prev, newMensagemClient])
+        const mensagemTeste = {
+            usuario: usuarioAtivo.id,
+            texto,
+            horario,
+            avatar: usuarioAtivo.avatar
+        }
 
-        socketInstance.emit('mensagem', newMensagemServer)
+        fetch("http://localhost:3000/mensagens", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(mensagemTeste)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Mensagem cadastrada: ", data);
+            setMensagems(prev => [...prev, newMensagemClient])
+
+            socketInstance.emit('mensagem', newMensagemServer)
+        })
+        .catch(error => console.log("Erro ao adicionar mensagem: ", error))
     }
 
     return (
