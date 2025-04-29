@@ -6,7 +6,7 @@ const Lista = () => {
         <div className='lista'>
             <div className='info'>
                 <img src="/furia_logo.png" alt="logo furia" />
-                <h2>Furia CS</h2>
+                <h2>Furia Club</h2>
             </div>
             <ListaChat />
         </div>
