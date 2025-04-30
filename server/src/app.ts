@@ -19,13 +19,15 @@ class App {
         this.socketIo.on('connection', socket => {
             console.log('conectou');
 
-            socket.on('entrarNaSala', sala => {
+            socket.on('entrarNaSala', async sala => {
                 socket.join(sala);
+                const socketsNaSala = await this.socketIo.in(sala).fetchSockets();
+                console.log(socketsNaSala.length)
                 console.log(`Usuário entrou na sala ${sala}`);
             });
 
-            socket.on('mensagem', mensagem => {
-                socket.broadcast.emit('mensagem', mensagem)
+            socket.on('mensagem', ({ sala, mensagem }) => {
+                socket.to(sala).emit('mensagem', mensagem)
             });
         })
     }
