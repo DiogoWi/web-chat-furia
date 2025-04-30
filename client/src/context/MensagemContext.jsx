@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 import { useState, createContext, useContext, useEffect } from "react";
 
@@ -6,7 +7,7 @@ MensagemContext.displayName = "Mensagem";
 
 const MensagemContextProvider = ({ children }) => {
     // Initial Provider State
-    const [chat, setChat] = useState("mensagens_cs_go");
+    const [chat, setChat] = useState({ sala: "cs_go", rota: "mensagens_cs_go"});
 
     const [mensagems, setMensagems] = useState([]);
 
@@ -32,7 +33,7 @@ export const useMensagem = () => {
     const { chat, setChat, mensagems, setMensagems } = useContext(MensagemContext);
 
     const trocarMensagens = async () => {
-        fetch(`http://localhost:3000/${chat}`)
+        fetch(`http://localhost:3000/${chat.rota}`)
         .then(response => response.json())
         .then(data => {
             console.log(data)
