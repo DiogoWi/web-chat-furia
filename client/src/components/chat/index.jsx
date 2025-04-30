@@ -4,23 +4,21 @@ import './chat.css';
 import { v4 as uuid } from 'uuid';
 import { useState, useRef, useEffect } from 'react';
 import { useLoginCadastro } from '../../context/LoginCadastroContext';
-import { socket } from '../../socket';
+import socket from '../../socket';
 import { useMensagem } from '../../context/MensagemContext';
 
 const Chat = () => {
-    const [socketInstance] = useState(socket());
-
     useEffect(() => {
-        socketInstance.on('mensagem', mensagem => {
+        socket.on('mensagem', mensagem => {
             console.log('Mensagem recebida: ', mensagem)
 
             setMensagems(prev => [...prev, mensagem]);
         });
 
         return () => {
-            socketInstance.off('mensagem')
+            socket.off('mensagem')
         }
-    }, [socketInstance])
+    }, [])
 
     const [open, setOpen] = useState(false);
     const [text, setText] = useState("");
@@ -48,18 +46,6 @@ const Chat = () => {
     const horario = `${dia}/${mes} ${hora}:${minuto}`;
 
     const handleMensagem = texto => {
-        // const newMensagemClient = {
-        //     texto,
-        //     horario,
-        //     own: true
-        // }
-
-        // const newMensagemServer = {
-        //     texto,
-        //     horario,
-        //     avatar: usuarioAtivo.avatar.file
-        // }
-
         const mensagemTeste = {
             id: uuid(),
             usuario: usuarioAtivo.id,
@@ -68,7 +54,7 @@ const Chat = () => {
             avatar: usuarioAtivo.avatar
         }
 
-        fetch(`http://localhost:3000/${chat}`, {
+        fetch(`http://localhost:3000/${chat.rota}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(mensagemTeste)
@@ -78,7 +64,7 @@ const Chat = () => {
             console.log("Mensagem cadastrada: ", data);
             setMensagems(prev => [...prev, mensagemTeste])
 
-            socketInstance.emit('mensagem', mensagemTeste)
+            socket.emit('mensagem', { sala: chat.sala, mensagem: mensagemTeste})
         })
         .catch(error => console.log("Erro ao adicionar mensagem: ", error))
     }

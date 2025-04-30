@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import './listaChat.css';
-import { socket } from '../../../socket';
-import { useEffect, useState } from 'react';
+import socket from '../../../socket';
+import { useEffect } from 'react';
 import { useMensagem } from '../../../context/MensagemContext';
 
 const ListaChat = () => {
-    const [socketInstance] = useState(socket());
     const { chat, setChat, trocarMensagens } = useMensagem();
 
     useEffect(() => {
@@ -13,14 +12,14 @@ const ListaChat = () => {
     }, [chat]);
 
     const handleSala = sala => {
-        socketInstance.emit('entrarNaSala', sala);
+        socket.emit('entrarNaSala', sala);
 
-        if (sala === "CS:GO") {
-            setChat('mensagens_cs_go');
-        } else if (sala === "Valorant") {
-            setChat('mensagens_valorant');
+        if (sala === "cs_go") {
+            setChat({ sala, rota: 'mensagens_cs_go'});
+        } else if (sala === "valorant") {
+            setChat({ sala, rota: 'mensagens_valorant'});
         } else {
-            setChat('mensagens_lol');
+            setChat({ sala, rota: 'mensagens_lol'});
         }
     }
 
@@ -33,14 +32,14 @@ const ListaChat = () => {
                 </div>
             </div>
 
-            <div className="item" onClick={() => handleSala("CS:GO")}>
+            <div className="item" onClick={() => handleSala("cs_go")}>
                 <img src="/avatar.png" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia CS:GO</span>
                     <p>Ultima mensagem</p>
                 </div>
             </div>
-            <div className="item" onClick={() => handleSala("Valorant")}>
+            <div className="item" onClick={() => handleSala("valorant")}>
                 <img src="/avatar.png" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia Valorant</span>
