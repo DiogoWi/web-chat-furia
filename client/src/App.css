@@ -1,7 +1,7 @@
 .container {
   width: 90vw;
   height: 90vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.9);
   border-radius: 12px;
   backdrop-filter: blur(5px) saturate(180%);
   display: flex;
