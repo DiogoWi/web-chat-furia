@@ -1,0 +1,51 @@
+const buscarPlacarDaFuria = async (game) => {
+    const token = `Bearer ${import.meta.env.VITE_PANDASCORE_API_KEY}`;
+    const gameSlugs = {
+        cs_go: 'csgo',
+        valorant: 'valorant',
+        lol: 'league-of-legends',
+        rocketleague: 'rocket-league',
+        r6: 'rainbow-six',
+    };
+
+    const teamIds = {
+        cs_go: 124530,
+        valorant: 128477,
+        lol: 126688,
+        rocketleague: 128933,
+        r6: 127596,
+    };
+
+    const slug = gameSlugs[game];
+    const teamId = teamIds[game];
+
+    const matchesRes = await fetch(
+        `https://api.pandascore.co/${slug}/matches/past?filter[opponent_id]=${teamId}&per_page=3`,
+        { headers: { Authorization: token } }
+    );
+    const matches = await matchesRes.json();
+
+    if (!matches.length) return 'Nenhuma partida encontrada.';
+
+    const lines = matches.map((match) => {
+        const placar = {
+            ligua: match.league.name,
+            oponente1: {
+                name: match.opponents[0].opponent.name,
+                image: match.opponents[0].opponent.image_url,
+                pontos: match.results[0].score
+            },
+            oponente2: {
+                name: match.opponents[1].opponent.name,
+                image: match.opponents[1].opponent.image_url,
+                pontos: match.results[1].score
+            }
+        }
+
+        return placar;
+    });
+
+    return lines;
+};
+
+export default buscarPlacarDaFuria;
