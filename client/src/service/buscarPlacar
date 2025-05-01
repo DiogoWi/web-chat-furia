@@ -1,4 +1,4 @@
-const buscarPlacarDaFuria = async (game) => {
+const buscarPlacarDaFuria = async (game, tipo, quantidade = 1) => {
     const token = `Bearer ${import.meta.env.VITE_PANDASCORE_API_KEY}`;
     const gameSlugs = {
         cs_go: 'csgo',
@@ -20,7 +20,7 @@ const buscarPlacarDaFuria = async (game) => {
     const teamId = teamIds[game];
 
     const matchesRes = await fetch(
-        `https://api.pandascore.co/${slug}/matches/past?filter[opponent_id]=${teamId}&per_page=3`,
+        `https://api.pandascore.co/${slug}/matches/${tipo}?filter[opponent_id]=${teamId}&per_page=${quantidade}`,
         { headers: { Authorization: token } }
     );
     const matches = await matchesRes.json();
