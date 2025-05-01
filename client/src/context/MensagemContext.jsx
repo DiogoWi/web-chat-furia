@@ -15,8 +15,7 @@ const MensagemContextProvider = ({ children }) => {
         fetch(`http://localhost:3000/${chat}`)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
-            setMensagems(data)
+            setMensagems(data);
         })
     }, []);
 
@@ -36,8 +35,7 @@ export const useMensagem = () => {
         fetch(`http://localhost:3000/${chat.rota}`)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
-            setMensagems(data)
+            setMensagems(data);
         })
     }
 

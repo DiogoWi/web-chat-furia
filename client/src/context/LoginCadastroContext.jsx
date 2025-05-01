@@ -65,7 +65,6 @@ export const useLoginCadastro = () => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log("Usuário adicionado: ", data);
             setUsuarioAtivo(data);
         })
         .catch(error => console.log("Erro ao adicionar: ", error))
@@ -94,7 +93,6 @@ export const useLoginCadastro = () => {
                 fetch(`http://localhost:3000/usuarios/${usuario}`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log("Usuário logado: ", data);
                     setUsuarioAtivo(data);
                 })
                 .catch(error => console.log("Falha no Login: ", error))
