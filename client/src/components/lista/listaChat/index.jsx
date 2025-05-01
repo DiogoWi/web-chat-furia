@@ -46,7 +46,7 @@ const ListaChat = () => {
                     <p>Ultima mensagem</p>
                 </div>
             </div>
-            <div className="item" onClick={() => handleSala("LOL")}>
+            <div className="item" onClick={() => handleSala("lol")}>
                 <img src="/avatar.jpg" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia LOL</span>
