@@ -138,6 +138,13 @@
             span {
                 font-size: 13px;
             }
+
+            .nenhuma_partida {
+                text-align: center;
+                padding: 20px;
+                background-color: rgba(55, 55, 55, 0.5);
+                border-radius: 8px;
+            }
         }
     }
 
