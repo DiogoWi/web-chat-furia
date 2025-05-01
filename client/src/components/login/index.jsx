@@ -50,7 +50,7 @@ const Login = () => {
                 <h2>Criar uma Conta</h2>
                 <form onSubmit={handleCadastrar}>
                     <label htmlFor="file">
-                        <img src={avatar.url || "./avatar.png"} alt="foto do avatar" />
+                        <img src={avatar.url || "./avatar.jpg"} alt="foto do avatar" />
                         Trocar Foto
                     </label>
                     <input type="file" id="file" style={{ display: "none" }} onChange={handleAvatar} />

@@ -33,21 +33,21 @@ const ListaChat = () => {
             </div>
 
             <div className="item" onClick={() => handleSala("cs_go")}>
-                <img src="/avatar.png" alt="foto avatar"/>
+                <img src="/avatar.jpg" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia CS:GO</span>
                     <p>Ultima mensagem</p>
                 </div>
             </div>
             <div className="item" onClick={() => handleSala("valorant")}>
-                <img src="/avatar.png" alt="foto avatar"/>
+                <img src="/avatar.jpg" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia Valorant</span>
                     <p>Ultima mensagem</p>
                 </div>
             </div>
             <div className="item" onClick={() => handleSala("LOL")}>
-                <img src="/avatar.png" alt="foto avatar"/>
+                <img src="/avatar.jpg" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia LOL</span>
                     <p>Ultima mensagem</p>

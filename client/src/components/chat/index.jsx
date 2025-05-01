@@ -96,7 +96,7 @@ const Chat = () => {
     return (
         <div className="chat">
             <div className="top">
-                <img src={usuarioAtivo.avatar.file || "/avatar.png"} alt="foto do usuário" />
+                <img src={usuarioAtivo.avatar.file || "/avatar.jpg"} alt="foto do usuário" />
                 <div className="texts">
                     <span>{usuarioAtivo.username}</span>
                     <p>Lorem ipsum dolor, sit amet.</p>
