@@ -15,8 +15,11 @@ const Chat = () => {
             setMensagems(prev => [...prev, mensagem]);
         });
 
+        socket.emit('entrarNaSala', chat.sala);
+
         return () => {
-            socket.off('mensagem')
+            socket.off('mensagem');
+            socket.off('entrarNaSala');
         }
     }, [])
 
@@ -45,10 +48,31 @@ const Chat = () => {
 
     const horario = `${dia}/${mes} ${hora}:${minuto}`;
 
+    const [foto, setFoto] = useState(false);
+
+    const handleImagem = (event) => {
+        if (event.target.files[0]) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                const base64 = reader.result;
+                setFoto({
+                    nome: file.name,
+                    file: base64,
+                    url: URL.createObjectURL(file),
+                });
+            };
+
+            reader.readAsDataURL(file)
+        };
+    };
+
     const handleMensagem = texto => {
-        const mensagemTeste = {
+        const mensagemNova = {
             id: uuid(),
             usuario: usuarioAtivo.id,
+            foto,
             texto,
             horario,
             avatar: usuarioAtivo.avatar
@@ -57,14 +81,14 @@ const Chat = () => {
         fetch(`http://localhost:3000/${chat.rota}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(mensagemTeste)
+            body: JSON.stringify(mensagemNova)
         })
         .then(response => response.json())
         .then(data => {
             console.log("Mensagem cadastrada: ", data);
-            setMensagems(prev => [...prev, mensagemTeste])
+            setMensagems(prev => [...prev, mensagemNova])
 
-            socket.emit('mensagem', { sala: chat.sala, mensagem: mensagemTeste})
+            socket.emit('mensagem', { sala: chat.sala, mensagem: mensagemNova})
         })
         .catch(error => console.log("Erro ao adicionar mensagem: ", error))
     }
@@ -85,7 +109,7 @@ const Chat = () => {
                         <div className={mensagem.usuario == usuarioAtivo.id ? "message own" : "message"} key={index}>
                             {mensagem.usuario != usuarioAtivo.id ? <img src={mensagem.avatar.file} alt="foto de perfil" /> : ""}
                             <div className='texts'>
-                                {mensagem.foto && <img src={mensagem.foto} alt="foto enviada" />}
+                                {mensagem.foto && <img src={mensagem.foto.file} alt="foto enviada" />}
                                 {mensagem.texto && <p>{mensagem.texto}</p>}
                                 <span>{mensagem.horario}</span>
                             </div>
@@ -97,11 +121,27 @@ const Chat = () => {
             </div>
 
             <div className="bottom">
+                <div className={foto ? 'preview ativo' : 'preview'}>
+                    {foto && (
+                        <div className='foto'>
+                            <img src={foto.url} alt="preview" />
+                            <p>{foto.nome}</p>
+                        </div>
+                    )}
+
+                    <ion-icon name="close" onClick={() => {
+                        let file = document.querySelector('#file');
+                        
+                        setFoto(false);
+                        file.value = '';
+                    }}></ion-icon>
+                </div>
+
                 <div className="icons">
                     <label htmlFor="file">
                         <ion-icon name="image-outline"></ion-icon>
                     </label>
-                    <input type="file" id="file" style={{ display: "none" }} />
+                    <input type="file" id="file" style={{ display: "none" }} onChange={handleImagem}/>
                 </div>
 
                 <input 
@@ -119,7 +159,11 @@ const Chat = () => {
                 </div>
 
                 <button className="sendButton" onClick={() => {
+                    let file = document.querySelector('#file');
+
                     handleMensagem(text);
+                    setFoto(false);
+                    file.value = '';
                     setText("");
                 }}>Enviar</button>
             </div>
