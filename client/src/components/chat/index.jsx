@@ -6,12 +6,11 @@ import { useState, useRef, useEffect } from 'react';
 import { useLoginCadastro } from '../../context/LoginCadastroContext';
 import socket from '../../socket';
 import { useMensagem } from '../../context/MensagemContext';
+import buscarPlacarDaFuria from '../../service/buscarPlacar';
 
 const Chat = () => {
     useEffect(() => {
         socket.on('mensagem', mensagem => {
-            console.log('Mensagem recebida: ', mensagem)
-
             setMensagems(prev => [...prev, mensagem]);
         });
 
@@ -68,14 +67,31 @@ const Chat = () => {
         };
     };
 
-    const handleMensagem = texto => {
-        const mensagemNova = {
-            id: uuid(),
-            usuario: usuarioAtivo.id,
-            foto,
-            texto,
-            horario,
-            avatar: usuarioAtivo.avatar
+    const handleMensagem = async texto => {
+        let mensagemNova = {};
+
+        if (texto === "/placar") {
+            const placarMessage = await buscarPlacarDaFuria(chat.sala);
+            const mensagem = {
+                id: uuid(),
+                tipo: 'placar',
+                placar: placarMessage,
+                horario
+            }
+
+            mensagemNova = mensagem;
+        } else {
+            const mensagem = {
+                id: uuid(),
+                tipo: 'mensagem',
+                usuario: usuarioAtivo.id,
+                foto,
+                texto,
+                horario,
+                avatar: usuarioAtivo.avatar
+            }
+
+            mensagemNova = mensagem;
         }
 
         fetch(`http://localhost:3000/${chat.rota}`, {
@@ -84,8 +100,7 @@ const Chat = () => {
             body: JSON.stringify(mensagemNova)
         })
         .then(response => response.json())
-        .then(data => {
-            console.log("Mensagem cadastrada: ", data);
+        .then(() => {
             setMensagems(prev => [...prev, mensagemNova])
 
             socket.emit('mensagem', { sala: chat.sala, mensagem: mensagemNova})
@@ -105,16 +120,36 @@ const Chat = () => {
 
             <div className="center">
                 {mensagems.map((mensagem, index) => {
-                    return (
-                        <div className={mensagem.usuario == usuarioAtivo.id ? "message own" : "message"} key={index}>
-                            {mensagem.usuario != usuarioAtivo.id ? <img src={mensagem.avatar.file} alt="foto de perfil" /> : ""}
-                            <div className='texts'>
-                                {mensagem.foto && <img src={mensagem.foto.file} alt="foto enviada" />}
-                                {mensagem.texto && <p>{mensagem.texto}</p>}
+                    if (mensagem.tipo == 'mensagem') {
+                        return (
+                            <div className={mensagem.usuario == usuarioAtivo.id ? "message own" : "message"} key={index}>
+                                {mensagem.usuario != usuarioAtivo.id ? <img src={mensagem.avatar.file} alt="foto de perfil" /> : ""}
+                                <div className='texts'>
+                                    {mensagem.foto && <img src={mensagem.foto.file} alt="foto enviada" />}
+                                    {mensagem.texto && <p>{mensagem.texto}</p>}
+                                    <span>{mensagem.horario}</span>
+                                </div>
+                            </div>
+                        )
+                    } else {
+                        return mensagem.placar.map((placar, index) => (
+                            <div className="placar" key={index}>
+                                <label className='ligua'>{placar.ligua}</label>
+                                <div className="dados">
+                                    <div className='oponente'>
+                                        <p>{placar.oponente1.name}</p>
+                                        <img src={placar.oponente1.image} alt="logo" />
+                                    </div>
+                                    <p>{placar.oponente1.pontos} X {placar.oponente2.pontos}</p>
+                                    <div className='oponente'>
+                                        <img src={placar.oponente2.image} alt="logo" />
+                                        <p>{placar.oponente2.name}</p>
+                                    </div>
+                                </div>
                                 <span>{mensagem.horario}</span>
                             </div>
-                        </div>
-                    )
+                        ))
+                    }
                 })}
 
                 <div ref={endRef}></div>
@@ -148,6 +183,16 @@ const Chat = () => {
                     type="text" 
                     placeholder="Escreva uma mensagem..." 
                     onChange={e => setText(e.target.value)}
+                    onKeyDown={e => {
+                        if (e.key === "Enter") {
+                            let file = document.querySelector('#file');
+
+                            handleMensagem(text);
+                            setFoto(false);
+                            file.value = '';
+                            setText("");
+                        }
+                    }}
                     value={text}
                 />
 
