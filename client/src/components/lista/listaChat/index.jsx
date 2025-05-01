@@ -53,20 +53,6 @@ const ListaChat = () => {
                     <p>Ultima mensagem</p>
                 </div>
             </div>
-            <div className="item">
-                <img src="/avatar.png" alt="foto avatar"/>
-                <div className="texts">
-                    <span>Usuário</span>
-                    <p>Ultima mensagem</p>
-                </div>
-            </div>
-            <div className="item">
-                <img src="/avatar.png" alt="foto avatar"/>
-                <div className="texts">
-                    <span>Usuário</span>
-                    <p>Ultima mensagem</p>
-                </div>
-            </div>
         </div>
     );
 }
