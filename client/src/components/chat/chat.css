@@ -124,7 +124,7 @@
                     gap: 20px;
 
                     p {
-                        text-align: center;
+                        width: min-content;
                     }
 
                     img {
@@ -133,6 +133,14 @@
                         object-fit: contain;
                     }
                 }
+            }
+
+            .horario {
+                display: flex;
+                justify-content: space-between;
+                background-color: rgba(17, 25, 40, 0.5);
+                padding: 10px;
+                border-radius: 8px;
             }
 
             span {

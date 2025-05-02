@@ -183,6 +183,10 @@ const Chat = () => {
                                             <p>{placar.oponente2.name}</p>
                                         </div>
                                     </div>
+                                    <div className='horario'>
+                                        <p>Início: {placar.inicio}</p>
+                                        {placar.fim && <p>Fim: {placar.fim}</p>}
+                                    </div>
                                     <span>{mensagem.horario}</span>
                                 </div>
                             ))
