@@ -4,7 +4,7 @@ import socket from '../../../socket';
 import { useEffect } from 'react';
 import { useMensagem } from '../../../context/MensagemContext';
 
-const ListaChat = () => {
+const ListaChat = ({ setOpen }) => {
     const { chat, setChat, trocarMensagens } = useMensagem();
 
     useEffect(() => {
@@ -29,42 +29,50 @@ const ListaChat = () => {
 
     return ( 
         <div className="chatList">
-            <div className="search">
-                <div className="searchBar">
-                    <ion-icon name="search-outline"></ion-icon>
-                    <input type="text" placeholder="Pesquisar" />
-                </div>
-            </div>
-
-            <div className="item" onClick={() => handleSala("csgo")}>
+            <div className="item" onClick={() => {
+                handleSala("csgo");
+                setOpen(false);
+            }}>
                 <img src="/avatar.jpg" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia CS:GO</span>
                     <p>Ultima mensagem</p>
                 </div>
             </div>
-            <div className="item" onClick={() => handleSala("valorant")}>
+            <div className="item" onClick={() => {
+                handleSala("valorant");
+                setOpen(false);
+            }}>
                 <img src="/avatar.jpg" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia Valorant</span>
                     <p>Ultima mensagem</p>
                 </div>
             </div>
-            <div className="item" onClick={() => handleSala("lol")}>
+            <div className="item" onClick={() => {
+                handleSala("lol");
+                setOpen(false);
+            }}>
                 <img src="/avatar.jpg" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia LOL</span>
                     <p>Ultima mensagem</p>
                 </div>
             </div>
-            <div className="item" onClick={() => handleSala("rl")}>
+            <div className="item" onClick={() => {
+                handleSala("rl");
+                setOpen(false);
+            }}>
                 <img src="/avatar.jpg" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia Rocket League</span>
                     <p>Ultima mensagem</p>
                 </div>
             </div>
-            <div className="item" onClick={() => handleSala("r6siege")}>
+            <div className="item" onClick={() => {
+                handleSala("r6siege");
+                setOpen(false);
+            }}>
                 <img src="/avatar.jpg" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia Rainbow 6 Siege</span>

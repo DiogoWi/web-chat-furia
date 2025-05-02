@@ -2,6 +2,7 @@
     flex: 2;
     border-left: 1px solid #dddddd35;
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
 
@@ -11,6 +12,11 @@
         align-items: center;
         border-bottom: 1px solid #dddddd35;
         gap: 20px;
+
+        .voltar {
+            font-size: 20px;
+            display: none;
+        }
 
         img {
             width: 60px;
@@ -104,7 +110,7 @@
                 border-radius: 8px;
                 width: 100%;
                 text-align: center;
-                font-size: 30px;
+                font-size: clamp(20px, 4vw, 30px);
                 padding: 10px;
             }
             
@@ -115,21 +121,21 @@
                 background-color: rgba(55, 55, 55, 0.5);
                 border-radius: 8px;
                 padding: 10px 20px;
-                font-size: 25px;
+                font-size: clamp(16px, 3vw, 25px);
                 
                 .oponente {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    gap: 20px;
+                    gap: clamp(10px, 2vw, 20px);
 
                     p {
                         width: min-content;
                     }
 
                     img {
-                        width: 70px;
-                        height: 70px;
+                        width: clamp(50px, 9vw, 70px);
+                        height: clamp(50px, 9vw, 70px);
                         object-fit: contain;
                     }
                 }
@@ -141,6 +147,7 @@
                 background-color: rgba(17, 25, 40, 0.5);
                 padding: 10px;
                 border-radius: 8px;
+                font-size: clamp(12px, 2.5vw, 16px);
             }
 
             span {
@@ -158,7 +165,7 @@
 
     .bottom {
         position: relative;
-        padding: 20px;
+        padding: 10px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -198,24 +205,20 @@
             top: -100px;
         }
 
-        .icons {
-            display: flex;
-            gap: 20px;
-        }
-
         ion-icon {
+            display: flex;
             width: 20px;
             height: 20px;
             cursor: pointer;
         }
 
         input {
-            flex: 1;
+            width: 100%;
             background-color: rgba(17, 25, 40, 0.5);
             border: none;
             outline: none;
             color: white;
-            padding: 20px;
+            padding: 18px;
             border-radius: 10px;
             font-size: 16px;
         }
@@ -239,9 +242,9 @@
         .sendButton {
             background-color: #b69b00;
             color: white;
-            padding: 10px 20px;
+            padding: 10px 10px;
             border: none;
-            border-radius: 5px;
+            border-radius: 50%;
             cursor: pointer;
         }
     }

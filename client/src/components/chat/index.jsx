@@ -8,7 +8,7 @@ import socket from '../../socket';
 import { useMensagem } from '../../context/MensagemContext';
 import buscarPlacarDaFuria from '../../service/buscarPlacar';
 
-const Chat = () => {
+const Chat = ({ setOpen }) => {
     useEffect(() => {
         socket.on('mensagem', mensagem => {
             setMensagems(prev => [...prev, mensagem]);
@@ -22,7 +22,7 @@ const Chat = () => {
         }
     }, [])
 
-    const [open, setOpen] = useState(false);
+    const [openEmoji, setOpenEmoji] = useState(false);
     const [text, setText] = useState("");
 
     const handleEmoji = (emojiClick) => {
@@ -147,6 +147,7 @@ const Chat = () => {
     return (
         <div className="chat">
             <div className="top">
+                <ion-icon className="voltar" name="arrow-back-outline" onClick={() => setOpen(true)}></ion-icon>
                 <img src={usuarioAtivo.avatar.file || "/avatar.jpg"} alt="foto do usuário" />
                 <div className="texts">
                     <span>{usuarioAtivo.username}</span>
@@ -245,9 +246,9 @@ const Chat = () => {
                 />
 
                 <div className="emoji">
-                    <ion-icon name="happy-outline" onClick={() => setOpen(prev => !prev)}></ion-icon>
+                    <ion-icon name="happy-outline" onClick={() => setOpenEmoji(prev => !prev)}></ion-icon>
                     <div className="picker">
-                        <EmojiPicker open={open} onEmojiClick={handleEmoji} />
+                        <EmojiPicker open={openEmoji} onEmojiClick={handleEmoji} />
                     </div>
                 </div>
 
@@ -258,7 +259,7 @@ const Chat = () => {
                     setFoto(false);
                     file.value = '';
                     setText("");
-                }}>Enviar</button>
+                }}><ion-icon name="send-outline"></ion-icon></button>
             </div>
         </div>
     );

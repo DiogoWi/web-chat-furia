@@ -1,14 +1,14 @@
 import './lista.css';
 import ListaChat from './listaChat';
 
-const Lista = () => {
+const Lista = ({ setOpen, open }) => {
     return (
-        <div className='lista'>
+        <div className={open ? 'lista ativo' : 'lista'}>
             <div className='info'>
                 <img src="/furia_logo.png" alt="logo furia" />
                 <h2>Furia Club</h2>
             </div>
-            <ListaChat />
+            <ListaChat setOpen={setOpen}/>
         </div>
     );
 }

@@ -1,36 +1,7 @@
 .chatList {
     flex: 1;
     overflow: auto;
-
-    .search {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        padding: 20px;
-
-        .searchBar {
-            flex: 1;
-            background-color: rgba(17, 25, 40, 0.5);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border-radius: 10px;
-            padding: 10px;
-
-            ion-icon {
-                width: 20px;
-                height: 20px;
-            }
-
-            input {
-                background-color: transparent;
-                border: none;
-                outline: none;
-                color: white;
-                flex: 1;
-            }
-        }
-    }
+    overflow-x: hidden;
 
     .item {
         display: flex;
@@ -66,12 +37,12 @@
 
 ::-webkit-scrollbar {
     background-color: rgba(128, 128, 128, 0.3);
-    width: 10px;
+    width: 8px;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
     background-color: black;
     border: 2px solid rgba(128, 128, 128, 0.3);
-    border-radius: 10px;
+    border-radius: 8px;
 }
