@@ -1,3 +1,11 @@
+const formatarDate = (data) => {
+    return new Intl.DateTimeFormat('pt-BR', {
+        dateStyle: 'short',
+        timeStyle: 'short',
+        timeZone: 'UTC'
+    }).format(new Date(data));
+};
+
 const buscarPlacarDaFuria = async (game, tipo, quantidade = 1) => {
     const token = `Bearer ${import.meta.env.VITE_PANDASCORE_API_KEY}`;
 
@@ -18,21 +26,41 @@ const buscarPlacarDaFuria = async (game, tipo, quantidade = 1) => {
     if (!matches.length) return 'Nenhuma partida encontrada.';
 
     const lines = matches.map((match) => {
-        const placar = {
-            ligua: match.league.name,
-            oponente1: {
-                name: match.opponents[0].opponent.name,
-                image: match.opponents[0].opponent.image_url,
-                pontos: match.results[0].score
-            },
-            oponente2: {
-                name: match.opponents[1].opponent.name,
-                image: match.opponents[1].opponent.image_url,
-                pontos: match.results[1].score
+        if (tipo == "past") {
+            const placar = {
+                ligua: match.league.name,
+                inicio: formatarDate(match.begin_at),
+                fim: formatarDate(match.end_at),
+                oponente1: {
+                    name: match.opponents[0].opponent.name,
+                    image: match.opponents[0].opponent.image_url,
+                    pontos: match.results[0].score
+                },
+                oponente2: {
+                    name: match.opponents[1].opponent.name,
+                    image: match.opponents[1].opponent.image_url,
+                    pontos: match.results[1].score
+                }
             }
+
+            return placar;
+        } else {
+            const placar = {
+                ligua: match.league.name,
+                inicio: formatarDate(match.begin_at),
+                oponente1: {
+                    name: match.opponents[0].opponent.name,
+                    image: match.opponents[0].opponent.image_url
+                },
+                oponente2: {
+                    name: match.opponents[1].opponent.name,
+                    image: match.opponents[1].opponent.image_url
+                }
+            }
+
+            return placar;
         }
 
-        return placar;
     });
 
     return lines;
