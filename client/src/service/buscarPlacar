@@ -1,26 +1,16 @@
 const buscarPlacarDaFuria = async (game, tipo, quantidade = 1) => {
     const token = `Bearer ${import.meta.env.VITE_PANDASCORE_API_KEY}`;
-    const gameSlugs = {
-        cs_go: 'csgo',
-        valorant: 'valorant',
-        lol: 'league-of-legends',
-        rocketleague: 'rocket-league',
-        r6: 'rainbow-six',
-    };
 
     const teamIds = {
-        cs_go: 124530,
+        csgo: 124530,
         valorant: 128477,
         lol: 126688,
-        rocketleague: 128933,
-        r6: 127596,
+        rl: 128933,
+        r6siege: 127596
     };
 
-    const slug = gameSlugs[game];
-    const teamId = teamIds[game];
-
     const matchesRes = await fetch(
-        `https://api.pandascore.co/${slug}/matches/${tipo}?filter[opponent_id]=${teamId}&per_page=${quantidade}`,
+        `https://api.pandascore.co/${game}/matches/${tipo}?filter[opponent_id]=${teamIds[game]}&per_page=${quantidade}`,
         { headers: { Authorization: token } }
     );
     const matches = await matchesRes.json();
