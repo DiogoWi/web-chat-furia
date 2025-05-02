@@ -33,50 +33,50 @@ const ListaChat = ({ setOpen }) => {
                 handleSala("csgo");
                 setOpen(false);
             }}>
-                <img src="/avatar.jpg" alt="foto avatar"/>
+                <img src="/capaCSGO.png" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia CS:GO</span>
-                    <p>Ultima mensagem</p>
+                    <p>Smoke no meio, bora!</p>
                 </div>
             </div>
             <div className="item" onClick={() => {
                 handleSala("valorant");
                 setOpen(false);
             }}>
-                <img src="/avatar.jpg" alt="foto avatar"/>
+                <img src="/capaValorant.png" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia Valorant</span>
-                    <p>Ultima mensagem</p>
+                    <p>Planta no site A!</p>
                 </div>
             </div>
             <div className="item" onClick={() => {
                 handleSala("lol");
                 setOpen(false);
             }}>
-                <img src="/avatar.jpg" alt="foto avatar"/>
+                <img src="/capaLOL.png" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia LOL</span>
-                    <p>Ultima mensagem</p>
+                    <p>Dragão em 30s</p>
                 </div>
             </div>
             <div className="item" onClick={() => {
                 handleSala("rl");
                 setOpen(false);
             }}>
-                <img src="/avatar.jpg" alt="foto avatar"/>
+                <img src="/capaRocket.png" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia Rocket League</span>
-                    <p>Ultima mensagem</p>
+                    <p>Gol de placa!</p>
                 </div>
             </div>
             <div className="item" onClick={() => {
                 handleSala("r6siege");
                 setOpen(false);
             }}>
-                <img src="/avatar.jpg" alt="foto avatar"/>
+                <img src="/capaRainbow.png" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia Rainbow 6 Siege</span>
-                    <p>Ultima mensagem</p>
+                    <p>Invasão pelo teto!</p>
                 </div>
             </div>
         </div>
