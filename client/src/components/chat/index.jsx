@@ -93,7 +93,6 @@ const Chat = () => {
             mensagemNova = mensagem;
         }else if (texto === "/proxima") {
             const placarMessage = await buscarPlacarDaFuria(chat.sala, 'upcoming');
-            console.log(placarMessage)
             const mensagem = {
                 id: uuid(),
                 tipo: 'placar',
