@@ -22,8 +22,7 @@ class App {
             socket.on('entrarNaSala', async sala => {
                 socket.join(sala);
                 const socketsNaSala = await this.socketIo.in(sala).fetchSockets();
-                console.log(socketsNaSala.length)
-                console.log(`Usuário entrou na sala ${sala}`);
+                console.log(`Usuário entrou na sala ${sala}.\nTem ${socketsNaSala.length} usuários nesta sala.`);
             });
 
             socket.on('mensagem', ({ sala, mensagem }) => {
