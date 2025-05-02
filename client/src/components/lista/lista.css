@@ -16,4 +16,8 @@
         height: 50px;
         object-fit: contain;
     }
+
+    h2 {
+        white-space: nowrap;
+    }
 }
