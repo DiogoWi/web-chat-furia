@@ -9,6 +9,8 @@ import { useMensagem } from '../../context/MensagemContext';
 import buscarPlacarDaFuria from '../../service/buscarPlacar';
 
 const Chat = ({ setOpen }) => {
+    const { chat, mensagems, setMensagems } = useMensagem();
+
     useEffect(() => {
         socket.on('mensagem', mensagem => {
             setMensagems(prev => [...prev, mensagem]);
@@ -22,14 +24,28 @@ const Chat = ({ setOpen }) => {
         }
     }, [])
 
+    const [chatEscolhido, setChatEscolhido] = useState("");
+
+    useEffect(() => {
+        if (chat.sala == "csgo") {
+            setChatEscolhido("Você está no chat do CS:GO!");
+        } else if (chat.sala == "valorant") {
+            setChatEscolhido("Você está no chat do Valorant!");
+        } else if (chat.sala == "lol") {
+            setChatEscolhido("Você está no chat do LOL!");
+        } else if (chat.sala == "rl") {
+            setChatEscolhido("Você está no chat do Rocket League!");
+        } else {
+            setChatEscolhido("Você está no chat do Rainbow 6 siege!");
+        }
+    }, [chat])
+
     const [openEmoji, setOpenEmoji] = useState(false);
     const [text, setText] = useState("");
 
     const handleEmoji = (emojiClick) => {
         setText(prev => prev + emojiClick.emoji)
     };
-
-    const { chat, mensagems, setMensagems } = useMensagem();
 
     const endRef = useRef(null);
 
@@ -144,6 +160,8 @@ const Chat = ({ setOpen }) => {
         }
     }
 
+    
+
     return (
         <div className="chat">
             <div className="top">
@@ -151,7 +169,7 @@ const Chat = ({ setOpen }) => {
                 <img src={usuarioAtivo.avatar.file || "/avatar.jpg"} alt="foto do usuário" />
                 <div className="texts">
                     <span>{usuarioAtivo.username}</span>
-                    <p>Lorem ipsum dolor, sit amet.</p>
+                    <p>{chatEscolhido}</p>
                 </div>
             </div>
 
