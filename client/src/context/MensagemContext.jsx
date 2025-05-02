@@ -7,7 +7,7 @@ MensagemContext.displayName = "Mensagem";
 
 const MensagemContextProvider = ({ children }) => {
     // Initial Provider State
-    const [chat, setChat] = useState({ sala: "cs_go", rota: "mensagens_cs_go"});
+    const [chat, setChat] = useState({ sala: "csgo", rota: "mensagens_cs_go"});
 
     const [mensagems, setMensagems] = useState([]);
 
