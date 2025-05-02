@@ -14,12 +14,16 @@ const ListaChat = () => {
     const handleSala = sala => {
         socket.emit('entrarNaSala', sala);
 
-        if (sala === "cs_go") {
+        if (sala === "csgo") {
             setChat({ sala, rota: 'mensagens_cs_go'});
         } else if (sala === "valorant") {
             setChat({ sala, rota: 'mensagens_valorant'});
-        } else {
+        } else if (sala === "lol") {
             setChat({ sala, rota: 'mensagens_lol'});
+        } else if (sala === "rl") {
+            setChat({ sala, rota: 'mensagens_rocketLeague'});
+        } else {
+            setChat({ sala, rota: 'mensagens_r6'});
         }
     }
 
@@ -32,7 +36,7 @@ const ListaChat = () => {
                 </div>
             </div>
 
-            <div className="item" onClick={() => handleSala("cs_go")}>
+            <div className="item" onClick={() => handleSala("csgo")}>
                 <img src="/avatar.jpg" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia CS:GO</span>
@@ -50,6 +54,20 @@ const ListaChat = () => {
                 <img src="/avatar.jpg" alt="foto avatar"/>
                 <div className="texts">
                     <span>Furia LOL</span>
+                    <p>Ultima mensagem</p>
+                </div>
+            </div>
+            <div className="item" onClick={() => handleSala("rl")}>
+                <img src="/avatar.jpg" alt="foto avatar"/>
+                <div className="texts">
+                    <span>Furia Rocket League</span>
+                    <p>Ultima mensagem</p>
+                </div>
+            </div>
+            <div className="item" onClick={() => handleSala("r6siege")}>
+                <img src="/avatar.jpg" alt="foto avatar"/>
+                <div className="texts">
+                    <span>Furia Rainbow 6 Siege</span>
                     <p>Ultima mensagem</p>
                 </div>
             </div>
