@@ -12,7 +12,7 @@ const MensagemContextProvider = ({ children }) => {
     const [mensagems, setMensagems] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/${chat}`)
+        fetch(`http://localhost:3000/${chat.rota}`)
         .then(response => response.json())
         .then(data => {
             setMensagems(data);
