@@ -7,7 +7,7 @@ const router = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
 app.app.use(middlewares);
 app.app.use('/api', router);
-app.server.listen(process.env.PORT || 3000, () => {
+app.server.listen(process.env.PORT, () => {
     console.log('Servidor iniciado!');
 });
 app.app.get('/', (_, res) => {
