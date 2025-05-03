@@ -14,3 +14,7 @@ app.app.use('/api', router);
 app.server.listen(process.env.PORT || 3333, () => {
     console.log('Servidor iniciado!')
 })
+
+app.app.get('/', (_, res) => {
+    res.send("Servidor rodando");
+})
