@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 import { useState, createContext, useContext, useEffect } from "react";
+const url = import.meta.env.VITE_URL;
 
 export const MensagemContext = createContext();
 MensagemContext.displayName = "Mensagem";
@@ -12,7 +13,7 @@ const MensagemContextProvider = ({ children }) => {
     const [mensagems, setMensagems] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/${chat.rota}`)
+        fetch(`${url}/api/${chat.rota}`)
         .then(response => response.json())
         .then(data => {
             setMensagems(data);
@@ -32,7 +33,7 @@ export const useMensagem = () => {
     const { chat, setChat, mensagems, setMensagems } = useContext(MensagemContext);
 
     const trocarMensagens = async () => {
-        fetch(`http://localhost:3000/${chat.rota}`)
+        fetch(`${url}/api/${chat.rota}`)
         .then(response => response.json())
         .then(data => {
             setMensagems(data);

@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:3333');
+const socket = io(import.meta.env.VITE_URL);
 
 export default socket;

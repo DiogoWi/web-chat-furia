@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState } from "react";
 import { v4 as uuid } from 'uuid';
+const url = import.meta.env.VITE_URL;
 
 export const LoginCadastroContext = createContext();
 LoginCadastroContext.displayName = "Login"
@@ -58,7 +59,7 @@ export const useLoginCadastro = () => {
             avatar
         }
 
-        fetch("http://localhost:3000/usuarios", {
+        fetch(`${url}/api/usuarios`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(usuario)
@@ -78,7 +79,7 @@ export const useLoginCadastro = () => {
 
         let usuario = 0;
 
-        fetch("http://localhost:3000/usuarios")
+        fetch(`${url}/api/usuarios`)
         .then(response => response.json())
         .then(data => {
 
@@ -90,7 +91,7 @@ export const useLoginCadastro = () => {
             }
 
             if (usuario > 0) {
-                fetch(`http://localhost:3000/usuarios/${usuario}`)
+                fetch(`${url}/api/usuarios/${usuario}`)
                 .then(response => response.json())
                 .then(data => {
                     setUsuarioAtivo(data);

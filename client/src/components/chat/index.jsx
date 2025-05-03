@@ -7,6 +7,7 @@ import { useLoginCadastro } from '../../context/LoginCadastroContext';
 import socket from '../../socket';
 import { useMensagem } from '../../context/MensagemContext';
 import buscarPlacarDaFuria from '../../service/buscarPlacar';
+const url = import.meta.env.VITE_URL;
 
 const Chat = ({ setOpen }) => {
     const { chat, mensagems, setMensagems } = useMensagem();
@@ -143,7 +144,7 @@ const Chat = ({ setOpen }) => {
         }
 
         if (typeof mensagemNova.placar !== "string") {
-            fetch(`http://localhost:3000/${chat.rota}`, {
+            fetch(`${url}/api/${chat.rota}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(mensagemNova)
