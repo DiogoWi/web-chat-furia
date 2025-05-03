@@ -1,19 +1,14 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const http_1 = require("http");
-const socket_io_1 = require("socket.io");
+import express from 'express';
+import { createServer } from 'http';
+import { Server as Io } from 'socket.io';
 class App {
     app;
     server;
     socketIo;
     constructor() {
-        this.app = (0, express_1.default)();
-        this.server = (0, http_1.createServer)(this.app);
-        this.socketIo = new socket_io_1.Server(this.server, {
+        this.app = express();
+        this.server = createServer(this.app);
+        this.socketIo = new Io(this.server, {
             cors: {
                 origin: '*'
             }
@@ -31,4 +26,4 @@ class App {
         });
     }
 }
-exports.default = App;
+export default App;
