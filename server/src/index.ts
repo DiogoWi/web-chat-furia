@@ -1,5 +1,7 @@
 import App from "./app.js";
-import jsonServer from 'json-server';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const jsonServer = require('json-server');
 
 const app = new App();
 
