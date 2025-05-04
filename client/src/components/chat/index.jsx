@@ -192,7 +192,7 @@ const Chat = ({ setOpen }) => {
                             return mensagem.placar.map((placar, index) => (
                                 <div className="placar" key={index}>
                                     <label className='ligua'>{placar.ligua}</label>
-                                    <div className="dados">
+                                    <div className="infoPlacar">
                                         <div className='oponente'>
                                             <p>{placar.oponente1.name}</p>
                                             <img src={placar.oponente1.image} alt="logo" />
