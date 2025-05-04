@@ -54,7 +54,7 @@
         .message {
             max-width: 70%;
             display: flex;
-            gap: 20px;
+            gap: 5px;
 
             &.own {
                 align-self: flex-end;
@@ -89,7 +89,7 @@
                     padding: 20px;
                     background-color: rgba(17, 25, 40, 0.5);
                     border-radius: 10px;
-                    word-break: break-all;
+                    word-break: break-word;
                 }
 
                 span {
