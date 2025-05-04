@@ -24,7 +24,7 @@ const Login = () => {
 
     return (
         <div className="loginContainer">
-            <div className={cadastroOpen ? 'item transparente' : 'item'}>
+            <div className={cadastroOpen ? 'dados transparente' : 'dados'}>
                     <h2>Login</h2>
                     <form onSubmit={handleLogin}>
                         <input 
@@ -50,7 +50,7 @@ const Login = () => {
 
             <div className="separator"></div>
 
-            <div className={cadastroOpen ? 'item' : 'item transparente'}>
+            <div className={cadastroOpen ? 'dados' : 'dados transparente'}>
                 <h2>Criar uma Conta</h2>
                 <form onSubmit={handleCadastrar}>
                     <label htmlFor="file">
