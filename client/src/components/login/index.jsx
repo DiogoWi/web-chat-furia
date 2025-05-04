@@ -1,5 +1,6 @@
 import './login.css';
 import { useLoginCadastro } from '../../context/LoginCadastroContext';
+import { useState } from 'react';
 
 const Login = () => {
     const { 
@@ -19,34 +20,37 @@ const Login = () => {
         handleLogin
     } = useLoginCadastro();
 
+    const [cadastroOpen, setCadastroOpen] = useState(false);
+
     return (
-        <div className="login">
-            <div className="item">
-                <h2>Login</h2>
-                <form onSubmit={handleLogin}>
-                    <input 
-                        type="email" 
-                        placeholder="E-mail" 
-                        name="email" 
-                        onChange={(event) => setLoginEmail(event.target.value)}
-                        value={loginEmail}
-                        required 
-                    />
-                    <input 
-                        type="password" 
-                        placeholder="Senha" 
-                        name="password" 
-                        onChange={(event) => setLoginSenha(event.target.value)}
-                        value={loginSenha}
-                        required 
-                    />
-                    <button>Logar</button>
-                </form>
+        <div className="loginContainer">
+            <div className={cadastroOpen ? 'item transparente' : 'item'}>
+                    <h2>Login</h2>
+                    <form onSubmit={handleLogin}>
+                        <input 
+                            type="email" 
+                            placeholder="E-mail" 
+                            name="email" 
+                            onChange={(event) => setLoginEmail(event.target.value)}
+                            value={loginEmail}
+                            required 
+                        />
+                        <input 
+                            type="password" 
+                            placeholder="Senha" 
+                            name="password" 
+                            onChange={(event) => setLoginSenha(event.target.value)}
+                            value={loginSenha}
+                            required 
+                        />
+                        <button>Logar</button>
+                    </form>
+                    <button onClick={() => setCadastroOpen(true)}>Cadastrar</button>
             </div>
 
             <div className="separator"></div>
 
-            <div className="item">
+            <div className={cadastroOpen ? 'item' : 'item transparente'}>
                 <h2>Criar uma Conta</h2>
                 <form onSubmit={handleCadastrar}>
                     <label htmlFor="file">
@@ -80,7 +84,10 @@ const Login = () => {
                     />
                     <button>Cadastrar</button>
                 </form>
+                <button onClick={() => setCadastroOpen(false)}>Logar</button>
             </div>
+
+            <img src="/bg.jpg" alt="teste" className={cadastroOpen ? 'capa ativo' : 'capa'} />
         </div>
     );
 }
